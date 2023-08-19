@@ -1,3 +1,5 @@
+using MiePieShop.Models;
+
 namespace MiePieShop
 {
     public class Program
@@ -8,6 +10,9 @@ namespace MiePieShop
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            
+            builder.Services.AddTransient<IPieRepository,MockPieRepository> ();
+            
             builder.Services.AddMvc();
 
             var app = builder.Build();
