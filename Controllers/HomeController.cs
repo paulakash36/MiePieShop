@@ -15,7 +15,7 @@ namespace MiePieShop.Controllers
         public IActionResult Index()
         {
             var pies = pieRepository.GetAllPies().OrderBy(p => p.Id);
-            var homeViewModel = new HomeViewModel() { Title = "MiePieShop", Pies = pies.ToList() };
+            var homeViewModel = new HomeViewModel() { Title = "Welcome to MiePieShop", Pies = pies.ToList() };
 
             return View(homeViewModel);
         }
