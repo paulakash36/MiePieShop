@@ -1,32 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiePieShop.Models;
-using System.Diagnostics;
+using MiePieShop.ViewModels;
 
 namespace MiePieShop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IPieRepository pieRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IPieRepository pieRepository)
         {
-            _logger = logger;
+            this.pieRepository = pieRepository;
         }
-
         public IActionResult Index()
         {
-            return View();
-        }
+            var pies = pieRepository.GetAllPies().OrderBy(p => p.Id);
+            var homeViewModel = new HomeViewModel() { Title = "MiePieShop", Pies = pies.ToList() };
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(homeViewModel);
         }
     }
 }
