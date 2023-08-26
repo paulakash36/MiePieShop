@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MiePieShop.Models;
 
 namespace MiePieShop
@@ -10,9 +11,13 @@ namespace MiePieShop
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            
-            builder.Services.AddTransient<IPieRepository,MockPieRepository> ();
-            
+
+            builder.Services.AddTransient<IPieRepository,PieRepository> ();
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MiePieShop"));
+            });
+
             builder.Services.AddMvc();
 
             var app = builder.Build();
